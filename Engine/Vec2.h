@@ -12,6 +12,10 @@ public:
 	Vec2& operator*= (float rhs);
 	Vec2 operator/ (float rhs) const;
 	Vec2& operator/= (float rhs);
+	float GetLengthSq() const;
+	float GetLength() const;
+	Vec2 GetNormalized() const;
+	Vec2& Normalize();
 private:
 	float x;
 	float y;
