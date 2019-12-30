@@ -24,6 +24,7 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "FrameTimer.h"
+#include "JumpyCube.h"
 
 class Game
 {
@@ -43,6 +44,9 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	static constexpr float gravity = 1.0f;
+	static constexpr float friction = 1.1f;
 	FrameTimer ft;
+	JumpyCube jumpy;
 	/********************************/
 };

@@ -21,10 +21,11 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd )
+	wnd(wnd),
+	gfx(wnd),
+	jumpy(Vec2(400.0f, 100.0f), 10)
 {
 }
 
@@ -38,8 +39,13 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	const float frameTime = ft.FrameTime();
+	
+	jumpy.Update(gravity, friction, frameTime);
+	jumpy.ClampScreen();
 }
 
 void Game::ComposeFrame()
 {
+	jumpy.Draw(gfx);
 }
