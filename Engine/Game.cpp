@@ -25,7 +25,7 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	jumpy(Vec2(400.0f, 100.0f), 10)
+	jumpy(Vec2(0.0f, 0.0f), 10)
 {
 }
 
@@ -41,11 +41,14 @@ void Game::UpdateModel()
 {
 	const float frameTime = ft.FrameTime();
 	
+	jumpy.Jump(wnd.mouse.LeftIsPressed(), Vec2(float(wnd.mouse.GetPosX()), float(wnd.mouse.GetPosY())), frameTime);
+
 	jumpy.Update(gravity, friction, frameTime);
 	jumpy.ClampScreen();
 }
 
 void Game::ComposeFrame()
 {
+	jumpy.DrawJumpIn(gfx);
 	jumpy.Draw(gfx);
 }

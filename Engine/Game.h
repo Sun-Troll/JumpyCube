@@ -44,8 +44,8 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	static constexpr float gravity = 1.0f;
-	static constexpr float friction = 1.1f;
+	static constexpr float gravity = 5.0f;
+	static constexpr float friction = 4.0f;
 	FrameTimer ft;
 	JumpyCube jumpy;
 	/********************************/

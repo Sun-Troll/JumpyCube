@@ -1,4 +1,6 @@
 #include "JumpyCube.h"
+#include <assert.h>
+#include <algorithm>
 
 JumpyCube::JumpyCube(const Vec2& startPos, int startLives)
 	:
@@ -40,7 +42,28 @@ void JumpyCube::ClampScreen()
 	}
 }
 
-void JumpyCube::Draw(Graphics & gfx) const
+void JumpyCube::Jump(bool charging, const Vec2& mouseVec, float ft)
+{
+	if (charging)
+	{
+		jumpCharging = true;
+		jumpVel = std::min(jumpVel + jumpChargeSpeed * ft, jumpVelMax);
+	}
+	else if (!charging && jumpCharging)
+	{
+		jumpCharging = false;
+		vel += Vec2(mouseVec - posCenter).Normalize() * jumpVel;
+		jumpVel = jumpVelMin;
+	}
+}
+
+void JumpyCube::Draw(Graphics& gfx) const
 {
 	gfx.DrawRect(GetRect(), c);
+}
+
+void JumpyCube::DrawJumpIn(Graphics& gfx) const
+{
+	gfx.DrawRect(RectF(jumpInTopLeft, jumpInWidth, jumpInHeight), jInColBase);
+	gfx.DrawRect(RectF(jumpInTopLeft, jumpInDrawChargeRatio * (jumpVel - jumpVelMin), jumpInHeight), jInColCharge);
 }
