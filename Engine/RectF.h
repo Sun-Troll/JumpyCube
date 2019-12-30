@@ -8,7 +8,7 @@ public:
 	RectF(const Vec2& leftTop, const Vec2& rightBottom);
 	RectF(float halfWidth, float halfHeight, const Vec2& center);
 	RectF(const Vec2& leftTop, float width, float height);
-private:
+public:
 	float left;
 	float right;
 	float top;
