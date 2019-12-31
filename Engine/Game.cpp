@@ -26,7 +26,8 @@ Game::Game(MainWindow& wnd)
 	wnd(wnd),
 	gfx(wnd),
 	SoundBorderTouch(L"Sounds\\spayed.wav"),
-	jumpy(Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f), 10)
+	jumpy(Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f), 10),
+	playform(Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f))
 {
 }
 
@@ -42,6 +43,28 @@ void Game::UpdateModel()
 {
 	const float frameTime = ft.FrameTime();
 	
+	bool left = false;
+	bool right = false;
+	bool top = false;
+	bool bottom = false;
+	if (wnd.kbd.KeyIsPressed('A'))
+	{
+		left = true;
+	}
+	else if (wnd.kbd.KeyIsPressed('D'))
+	{
+		right = true;
+	}
+	if (wnd.kbd.KeyIsPressed('W'))
+	{
+		top = true;
+	}
+	else if (wnd.kbd.KeyIsPressed('S'))
+	{
+		bottom = true;
+	}
+	playform.Update(left, right, top, bottom, frameTime);
+
 	jumpy.Jump(wnd.mouse.LeftIsPressed(), Vec2(float(wnd.mouse.GetPosX()), float(wnd.mouse.GetPosY())), frameTime);
 
 	jumpy.Update(gravity, friction, frameTime);
@@ -50,11 +73,14 @@ void Game::UpdateModel()
 		SoundBorderTouch.Play();
 	}
 	jumpy.Respawn(frameTime);
+
+	playform.ClampScreen();
 	jumpy.ClampScreen();
 }
 
 void Game::ComposeFrame()
 {
+	playform.Draw(gfx);
 	jumpy.DrawLives(gfx);
 	jumpy.DrawJumpIn(gfx);
 	jumpy.DrawBorders(gfx);

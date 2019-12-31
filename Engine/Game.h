@@ -25,6 +25,7 @@
 #include "Graphics.h"
 #include "FrameTimer.h"
 #include "JumpyCube.h"
+#include "PlayerPlatform.h"
 #include "Sound.h"
 
 class Game
@@ -50,5 +51,6 @@ private:
 	FrameTimer ft;
 	Sound SoundBorderTouch;
 	JumpyCube jumpy;
+	PlayerPlatform playform;
 	/********************************/
 };
