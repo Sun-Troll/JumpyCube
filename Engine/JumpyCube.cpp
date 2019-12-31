@@ -62,6 +62,14 @@ void JumpyCube::Draw(Graphics& gfx) const
 	gfx.DrawRect(GetRect(), c);
 }
 
+void JumpyCube::DrawBorders(Graphics & gfx) const
+{
+	gfx.DrawRect(borderRectLeft, borderC);
+	gfx.DrawRect(borderRectRight, borderC);
+	gfx.DrawRect(borderRectTop, borderC);
+	gfx.DrawRect(borderRectBottom, borderC);
+}
+
 void JumpyCube::DrawJumpIn(Graphics& gfx) const
 {
 	gfx.DrawRect(RectF(jumpInTopLeft, jumpInWidth, jumpInHeight), jInColBase);

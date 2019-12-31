@@ -50,5 +50,6 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 	jumpy.DrawJumpIn(gfx);
+	jumpy.DrawBorders(gfx);
 	jumpy.Draw(gfx);
 }
