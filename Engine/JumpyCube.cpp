@@ -16,9 +16,12 @@ RectF JumpyCube::GetRect() const
 
 void JumpyCube::Update(float gravity, float friction, float ft)
 {
-	vel.y += gravity * ft;
-	vel /= pow(friction, ft);
-	posCenter += vel;
+	if (state == State::Jumping)
+	{
+		vel.y += gravity * ft;
+		vel /= pow(friction, ft);
+		posCenter += vel;
+	}
 }
 
 void JumpyCube::ClampScreen()
@@ -44,33 +47,88 @@ void JumpyCube::ClampScreen()
 
 void JumpyCube::Jump(bool charging, const Vec2& mouseVec, float ft)
 {
-	if (charging)
+	if (state == State::Jumping || state == State::Respawning) //change jumping to sticking
 	{
-		jumpCharging = true;
-		jumpVel = std::min(jumpVel + jumpChargeSpeed * ft, jumpVelMax);
-	}
-	else if (!charging && jumpCharging)
-	{
-		jumpCharging = false;
-		vel += Vec2(mouseVec - posCenter).Normalize() * jumpVel;
-		jumpVel = jumpVelMin;
+		if (charging)
+		{
+			jumpCharging = true;
+			jumpVel = std::min(jumpVel + jumpChargeSpeed * ft, jumpVelMax);
+		}
+		else if (!charging && jumpCharging)
+		{
+			if (state == State::Respawning)
+			{
+				state = State::Jumping;
+				mustJumpRespawnCounter = 0.0f;
+				posCenter = Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f);
+				vel = Vec2(0.0f, 0.0f);
+			}
+			jumpCharging = false;
+			vel += Vec2(mouseVec - posCenter).Normalize() * jumpVel;
+			jumpVel = jumpVelMin;
+		}
 	}
 }
 
 bool JumpyCube::OutsideBorders()
 {
 	const RectF rect = GetRect();
-	if (rect.left < borders.left || rect.right > borders.right || rect.top < borders.top || rect.bottom > borders.bottom)
+	if (state != State::Dead && state != State::Respawning
+		&& (rect.left < borders.left || rect.right > borders.right || rect.top < borders.top || rect.bottom > borders.bottom))
 	{
 		nLives--;
+		state = State::Dead;
+		respawnCounter = 0.0f;
 		return true;
+	}
+	return false;
+}
+
+bool JumpyCube::Respawn(float ft)
+{
+	if (state == State::Dead)
+	{
+		respawnCounter += ft;
+		if (respawnCounter >= respawnTime)
+		{
+			state = State::Respawning;
+			respawnCounter = 0.0f;
+			return true;
+		}
+	}
+	else if (state == State::Respawning)
+	{
+		posCenter = Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f);
+		mustJumpRespawnCounter += ft;
+		if (mustJumpRespawnCounter >= mustJumpRespawnTime)
+		{
+			state = State::Jumping;
+			mustJumpRespawnCounter = 0.0f;
+			vel = Vec2(0.0f, 0.0f);
+		}
 	}
 	return false;
 }
 
 void JumpyCube::Draw(Graphics& gfx) const
 {
-	gfx.DrawRect(GetRect(), c);
+	switch (state)
+	{
+	case JumpyCube::State::Jumping:
+		gfx.DrawRect(GetRect(), colJumping);
+		break;
+	case JumpyCube::State::Sticking:
+		gfx.DrawRect(GetRect(), colSticking);
+		break;
+	case JumpyCube::State::Dead:
+		gfx.DrawRect(GetRect(), colDead);
+		break;
+	case JumpyCube::State::Respawning:
+		gfx.DrawRect(GetRect(), colRespawning);
+		break;
+	default:
+		break;
+	}
 }
 
 void JumpyCube::DrawBorders(Graphics & gfx) const

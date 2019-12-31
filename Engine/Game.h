@@ -25,6 +25,7 @@
 #include "Graphics.h"
 #include "FrameTimer.h"
 #include "JumpyCube.h"
+#include "Sound.h"
 
 class Game
 {
@@ -47,6 +48,7 @@ private:
 	static constexpr float gravity = 5.0f;
 	static constexpr float friction = 4.0f;
 	FrameTimer ft;
+	Sound SoundBorderTouch;
 	JumpyCube jumpy;
 	/********************************/
 };

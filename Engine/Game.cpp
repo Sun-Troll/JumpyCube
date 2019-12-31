@@ -25,6 +25,7 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
+	SoundBorderTouch(L"Sounds\\spayed.wav"),
 	jumpy(Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f), 10)
 {
 }
@@ -44,7 +45,11 @@ void Game::UpdateModel()
 	jumpy.Jump(wnd.mouse.LeftIsPressed(), Vec2(float(wnd.mouse.GetPosX()), float(wnd.mouse.GetPosY())), frameTime);
 
 	jumpy.Update(gravity, friction, frameTime);
-	jumpy.OutsideBorders();
+	if (jumpy.OutsideBorders())
+	{
+		SoundBorderTouch.Play();
+	}
+	jumpy.Respawn(frameTime);
 	jumpy.ClampScreen();
 }
 

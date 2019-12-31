@@ -18,6 +18,7 @@ public:
 	void ClampScreen();
 	void Jump(bool charging, const Vec2& mouseVec, float ft);
 	bool OutsideBorders();
+	bool Respawn(float ft);
 	//drawing
 	void Draw(Graphics& gfx) const;
 	void DrawBorders(Graphics& gfx) const;
@@ -27,8 +28,15 @@ private:
 	Vec2 posCenter;
 	Vec2 vel{ 0.0f, 0.0f };
 	static constexpr float halfDim = 10.0f;
-	static constexpr Color c = Colors::White;
+	static constexpr Color colJumping = Colors::White;
+	static constexpr Color colSticking = Colors::Gray;
+	static constexpr Color colDead{ 250, 100, 100 };
+	static constexpr Color colRespawning = { 250, 250, 100 };
 	State state = State::Jumping;
+	static constexpr float respawnTime = 3.0f;
+	float respawnCounter = 0.0f;
+	float mustJumpRespawnTime = 5.0f;
+	float mustJumpRespawnCounter = 0.0f;
 	//lives
 	static constexpr int nLivesMax = 34;
 	int nLives = 10;
