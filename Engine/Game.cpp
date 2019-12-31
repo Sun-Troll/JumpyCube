@@ -65,17 +65,22 @@ void Game::UpdateModel()
 	}
 	playform.Update(left, right, top, bottom, frameTime);
 
-	jumpy.Jump(wnd.mouse.LeftIsPressed(), Vec2(float(wnd.mouse.GetPosX()), float(wnd.mouse.GetPosY())), frameTime);
+	jumpy.Jump(playform, wnd.mouse.LeftIsPressed(), Vec2(float(wnd.mouse.GetPosX()), float(wnd.mouse.GetPosY())), frameTime);
 
 	jumpy.Update(gravity, friction, frameTime);
-	if (jumpy.OutsideBorders())
+	if (jumpy.OutsideBorders(playform))
 	{
 		SoundBorderTouch.Play();
 	}
-	jumpy.Respawn(playform.GetPos(), frameTime);
+	jumpy.Respawn(playform, frameTime);
 
 	playform.ClampScreen();
 	jumpy.ClampScreen();
+
+	if (wnd.kbd.KeyIsPressed(VK_SPACE))
+	{
+		playform.Cheat();
+	}
 }
 
 void Game::ComposeFrame()

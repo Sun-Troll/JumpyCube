@@ -1,5 +1,6 @@
 #pragma once
 #include "Graphics.h"
+#include "PlayerPlatform.h"
 
 class JumpyCube
 {
@@ -16,9 +17,9 @@ public:
 	RectF GetRect() const;
 	void Update(float gravity, float friction, float ft);
 	void ClampScreen();
-	void Jump(bool charging, const Vec2& mouseVec, float ft);
-	bool OutsideBorders();
-	bool Respawn(const Vec2& playformPos, float ft);
+	void Jump(PlayerPlatform& playform, bool charging, const Vec2& mouseVec, float ft);
+	bool OutsideBorders(PlayerPlatform& playform);
+	bool Respawn(PlayerPlatform& playform, float ft);
 	//drawing
 	void Draw(Graphics& gfx) const;
 	void DrawBorders(Graphics& gfx) const;
@@ -32,7 +33,7 @@ private:
 	static constexpr Color colSticking = Colors::Gray;
 	static constexpr Color colDead{ 250, 100, 100 };
 	static constexpr Color colRespawning = { 250, 250, 100 };
-	State state = State::Jumping;
+	State state = State::Respawning;
 	static constexpr float respawnTime = 3.0f;
 	float respawnCounter = 0.0f;
 	float mustJumpRespawnTime = 5.0f;

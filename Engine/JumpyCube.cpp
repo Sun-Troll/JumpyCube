@@ -45,9 +45,9 @@ void JumpyCube::ClampScreen()
 	}
 }
 
-void JumpyCube::Jump(bool charging, const Vec2& mouseVec, float ft)
+void JumpyCube::Jump(PlayerPlatform& playform, bool charging, const Vec2& mouseVec, float ft)
 {
-	if (state == State::Jumping || state == State::Respawning) //change jumping to sticking
+	if (state == State::Sticking || state == State::Respawning)
 	{
 		if (charging)
 		{
@@ -59,6 +59,7 @@ void JumpyCube::Jump(bool charging, const Vec2& mouseVec, float ft)
 			if (state == State::Respawning)
 			{
 				state = State::Jumping;
+				playform.SetState(PlayerPlatform::State::Touched);
 				mustJumpRespawnCounter = 0.0f;
 			}
 			jumpCharging = false;
@@ -68,7 +69,7 @@ void JumpyCube::Jump(bool charging, const Vec2& mouseVec, float ft)
 	}
 }
 
-bool JumpyCube::OutsideBorders()
+bool JumpyCube::OutsideBorders(PlayerPlatform& playform)
 {
 	const RectF rect = GetRect();
 	if (state != State::Dead && state != State::Respawning
@@ -76,13 +77,14 @@ bool JumpyCube::OutsideBorders()
 	{
 		nLives--;
 		state = State::Dead;
+		playform.SetState(PlayerPlatform::State::JumpyDead);
 		respawnCounter = 0.0f;
 		return true;
 	}
 	return false;
 }
 
-bool JumpyCube::Respawn(const Vec2& playformPos, float ft)
+bool JumpyCube::Respawn(PlayerPlatform& playform, float ft)
 {
 	if (state == State::Dead)
 	{
@@ -90,8 +92,9 @@ bool JumpyCube::Respawn(const Vec2& playformPos, float ft)
 		if (respawnCounter >= respawnTime)
 		{
 			state = State::Respawning;
+			playform.SetState(PlayerPlatform::State::jumpyResp);
 			respawnCounter = 0.0f;
-			posCenter = Vec2(playformPos);
+			posCenter = Vec2(playform.GetPos());
 			vel = Vec2(0.0f, 0.0f);
 			jumpCharging = false;
 			jumpVel = jumpVelMin;
@@ -100,11 +103,12 @@ bool JumpyCube::Respawn(const Vec2& playformPos, float ft)
 	}
 	else if (state == State::Respawning)
 	{
-		posCenter = Vec2(playformPos);
+		posCenter = Vec2(playform.GetPos());
 		mustJumpRespawnCounter += ft;
 		if (mustJumpRespawnCounter >= mustJumpRespawnTime)
 		{
 			state = State::Jumping;
+			playform.SetState(PlayerPlatform::State::Touched);
 			mustJumpRespawnCounter = 0.0f;
 		}
 	}
