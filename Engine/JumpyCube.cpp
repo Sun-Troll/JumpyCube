@@ -82,7 +82,7 @@ bool JumpyCube::OutsideBorders()
 	return false;
 }
 
-bool JumpyCube::Respawn(float ft)
+bool JumpyCube::Respawn(const Vec2& playformPos, float ft)
 {
 	if (state == State::Dead)
 	{
@@ -91,7 +91,7 @@ bool JumpyCube::Respawn(float ft)
 		{
 			state = State::Respawning;
 			respawnCounter = 0.0f;
-			posCenter = Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f);//Change to player platform center
+			posCenter = Vec2(playformPos);
 			vel = Vec2(0.0f, 0.0f);
 			jumpCharging = false;
 			jumpVel = jumpVelMin;
@@ -100,7 +100,7 @@ bool JumpyCube::Respawn(float ft)
 	}
 	else if (state == State::Respawning)
 	{
-		posCenter = Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f);//Change to player platform center
+		posCenter = Vec2(playformPos);
 		mustJumpRespawnCounter += ft;
 		if (mustJumpRespawnCounter >= mustJumpRespawnTime)
 		{

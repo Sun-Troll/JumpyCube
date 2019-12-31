@@ -18,7 +18,7 @@ public:
 	void ClampScreen();
 	void Jump(bool charging, const Vec2& mouseVec, float ft);
 	bool OutsideBorders();
-	bool Respawn(float ft);
+	bool Respawn(const Vec2& playformPos, float ft);
 	//drawing
 	void Draw(Graphics& gfx) const;
 	void DrawBorders(Graphics& gfx) const;

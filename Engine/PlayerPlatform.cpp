@@ -76,3 +76,18 @@ void PlayerPlatform::Draw(Graphics& gfx) const
 		break;
 	}
 }
+
+PlayerPlatform::State PlayerPlatform::GetState() const
+{
+	return state;
+}
+
+void PlayerPlatform::SetState(State stateSet)
+{
+	state = stateSet;
+}
+
+Vec2 PlayerPlatform::GetPos() const
+{
+	return posCenter;
+}

@@ -72,7 +72,7 @@ void Game::UpdateModel()
 	{
 		SoundBorderTouch.Play();
 	}
-	jumpy.Respawn(frameTime);
+	jumpy.Respawn(playform.GetPos(), frameTime);
 
 	playform.ClampScreen();
 	jumpy.ClampScreen();

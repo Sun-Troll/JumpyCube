@@ -18,6 +18,9 @@ public:
 	void Update(bool left, bool right, bool top, bool bottom, float ft);
 	void ClampScreen();
 	void Draw(Graphics& gfx) const;
+	State GetState() const;
+	void SetState(State stateSet);
+	Vec2 GetPos() const;
 private:
 	Vec2 posCenter;
 	static constexpr float movementSpeed = 200.0f;
