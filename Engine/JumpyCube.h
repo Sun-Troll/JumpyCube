@@ -4,29 +4,48 @@
 class JumpyCube
 {
 public:
+	enum class State
+	{
+		Jumping,
+		Sticking,
+		Dead,
+		Respawning
+	};
+public:
 	JumpyCube(const Vec2& startPos, int startLives);
 	RectF GetRect() const;
 	void Update(float gravity, float friction, float ft);
 	void ClampScreen();
 	void Jump(bool charging, const Vec2& mouseVec, float ft);
+	bool OutsideBorders();
+	//drawing
 	void Draw(Graphics& gfx) const;
 	void DrawBorders(Graphics& gfx) const;
 	void DrawJumpIn(Graphics& gfx) const;
+	void DrawLives(Graphics& gfx) const;
 private:
 	Vec2 posCenter;
 	Vec2 vel{ 0.0f, 0.0f };
-	int nLives;
 	static constexpr float halfDim = 10.0f;
 	static constexpr Color c = Colors::White;
+	State state = State::Jumping;
+	//lives
+	static constexpr int nLivesMax = 34;
+	int nLives = 10;
+	static constexpr float LivesDrawDim = 30.0f;
+	static constexpr float LivesDrawPadding = 20.0f;
+	const Vec2 livesDrawTopLeft{ 50.0f, 20.0f };
+	static constexpr Color LivesBaseC{ 50, 125, 125 };
+	static constexpr Color LiveCurC{ 100, 250, 250 };
 	//jump
 	static constexpr float jumpVelMin = 3.0f;
 	static constexpr float jumpVelMax = 15.0f;
 	float jumpVel = jumpVelMin;
 	bool jumpCharging = false;
 	static constexpr float jumpChargeSpeed = 6.0f;
-	const Vec2 jumpInTopLeft{ 20.0f, 50.0f }; //Why can't do static constexpr?
-	static constexpr float jumpInWidth = 100.0f;
-	static constexpr float jumpInHeight = 10.0f;
+	const Vec2 jumpInTopLeft{ 50.0f, 80.0f }; //Why can't do static constexpr?
+	static constexpr float jumpInWidth = 200.0f;
+	static constexpr float jumpInHeight = 20.0f;
 	static constexpr float jumpInDrawChargeRatio = jumpInWidth / (jumpVelMax - jumpVelMin);
 	static constexpr Color jInColBase{ 125, 75, 25 };
 	static constexpr Color jInColCharge{ 250, 150, 50 };

@@ -25,7 +25,7 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	jumpy(Vec2(0.0f, 0.0f), 10)
+	jumpy(Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f), 10)
 {
 }
 
@@ -44,11 +44,13 @@ void Game::UpdateModel()
 	jumpy.Jump(wnd.mouse.LeftIsPressed(), Vec2(float(wnd.mouse.GetPosX()), float(wnd.mouse.GetPosY())), frameTime);
 
 	jumpy.Update(gravity, friction, frameTime);
+	jumpy.OutsideBorders();
 	jumpy.ClampScreen();
 }
 
 void Game::ComposeFrame()
 {
+	jumpy.DrawLives(gfx);
 	jumpy.DrawJumpIn(gfx);
 	jumpy.DrawBorders(gfx);
 	jumpy.Draw(gfx);

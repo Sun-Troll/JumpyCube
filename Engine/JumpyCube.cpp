@@ -32,9 +32,9 @@ void JumpyCube::ClampScreen()
 	{
 		posCenter.x = Graphics::ScreenWidth - halfDim;
 	}
-	if (rect.top < 0.0f)
+	if (rect.top < 100.0f)
 	{
-		posCenter.y = halfDim;
+		posCenter.y = halfDim + 100.0f;
 	}
 	else if (rect.bottom > Graphics::ScreenHeight)
 	{
@@ -57,6 +57,17 @@ void JumpyCube::Jump(bool charging, const Vec2& mouseVec, float ft)
 	}
 }
 
+bool JumpyCube::OutsideBorders()
+{
+	const RectF rect = GetRect();
+	if (rect.left < borders.left || rect.right > borders.right || rect.top < borders.top || rect.bottom > borders.bottom)
+	{
+		nLives--;
+		return true;
+	}
+	return false;
+}
+
 void JumpyCube::Draw(Graphics& gfx) const
 {
 	gfx.DrawRect(GetRect(), c);
@@ -74,4 +85,20 @@ void JumpyCube::DrawJumpIn(Graphics& gfx) const
 {
 	gfx.DrawRect(RectF(jumpInTopLeft, jumpInWidth, jumpInHeight), jInColBase);
 	gfx.DrawRect(RectF(jumpInTopLeft, jumpInDrawChargeRatio * (jumpVel - jumpVelMin), jumpInHeight), jInColCharge);
+}
+
+void JumpyCube::DrawLives(Graphics& gfx) const
+{
+	for (int life = 0; life < nLivesMax; life++)
+	{
+		const RectF rect{ Vec2(livesDrawTopLeft + Vec2((LivesDrawDim + LivesDrawPadding) * float(life), 0.0f)),
+			LivesDrawDim, LivesDrawDim };
+		gfx.DrawRect(rect, LivesBaseC);
+	}
+	for (int life = 0; life < nLives; life++)
+	{
+		const RectF rect{ Vec2(livesDrawTopLeft + Vec2((LivesDrawDim + LivesDrawPadding) * float(life), 0.0f)),
+			LivesDrawDim, LivesDrawDim };
+		gfx.DrawRect(rect, LiveCurC);
+	}
 }
