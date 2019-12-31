@@ -60,8 +60,6 @@ void JumpyCube::Jump(bool charging, const Vec2& mouseVec, float ft)
 			{
 				state = State::Jumping;
 				mustJumpRespawnCounter = 0.0f;
-				posCenter = Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f);
-				vel = Vec2(0.0f, 0.0f);
 			}
 			jumpCharging = false;
 			vel += Vec2(mouseVec - posCenter).Normalize() * jumpVel;
@@ -93,18 +91,21 @@ bool JumpyCube::Respawn(float ft)
 		{
 			state = State::Respawning;
 			respawnCounter = 0.0f;
+			posCenter = Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f);//Change to player platform center
+			vel = Vec2(0.0f, 0.0f);
+			jumpCharging = false;
+			jumpVel = jumpVelMin;
 			return true;
 		}
 	}
 	else if (state == State::Respawning)
 	{
-		posCenter = Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f);
+		posCenter = Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f);//Change to player platform center
 		mustJumpRespawnCounter += ft;
 		if (mustJumpRespawnCounter >= mustJumpRespawnTime)
 		{
 			state = State::Jumping;
 			mustJumpRespawnCounter = 0.0f;
-			vel = Vec2(0.0f, 0.0f);
 		}
 	}
 	return false;
