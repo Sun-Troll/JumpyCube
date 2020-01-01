@@ -25,6 +25,8 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
+	soundStart(L"Sounds\\Title.wav"),
+	soundWon(L"Sounds\\Music_Loop.wav"),
 	soundDead(L"Sounds\\Fart.wav"),
 	soundLost(L"Sounds\\spayed.wav"),
 	soundGainLive(L"Sounds\\Eat.wav"),
@@ -50,7 +52,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float frameTime = ft.FrameTime();
-	if (!won && !lost)
+	if (!won && !lost && start)
 	{
 		timeSinceSpawn += frameTime;
 
@@ -58,10 +60,6 @@ void Game::UpdateModel()
 		{
 			plats[currentPlaty].Activate();
 			currentPlaty++;
-			if (currentPlaty >= platformMax)
-			{
-				won = true;
-			}
 			timeSinceSpawn = 0.0f;
 		}
 		for (int i = std::max(0, currentPlaty - nPlatsBackCheck); i < currentPlaty; i++)
@@ -135,11 +133,21 @@ void Game::UpdateModel()
 			lost = true;
 			soundLost.Play();
 		}
+		else if (currentPlaty >= platformMax && !lost)
+		{
+			won = true;
+			soundWon.Play();
+		}
 
 		/*if (wnd.kbd.KeyIsPressed(VK_SPACE))
 		{
 			playform.Cheat();
 		}*/
+	}
+	else if (!start && wnd.kbd.KeyIsPressed(VK_RETURN))
+	{
+		start = true;
+		soundStart.Play();
 	}
 }
 

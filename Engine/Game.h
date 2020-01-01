@@ -50,6 +50,8 @@ private:
 	static constexpr float gravity = 300.0f;
 	static constexpr float friction = 4.0f;
 	FrameTimer ft;
+	Sound soundStart;
+	Sound soundWon;
 	Sound soundDead;
 	Sound soundLost;
 	Sound soundGainLive;
@@ -63,6 +65,7 @@ private:
 	static constexpr float SpawnTime = 1.0f;
 	float timeSinceSpawn = 0.0f;
 	Platform plats[platformMax];
+	bool start = false;
 	bool won = false;
 	bool lost = false;
 	const RectF wonLoseRect{ 150.0f, 100.0f, Vec2(float(Graphics::ScreenWidth) / 2.0f, float(Graphics::ScreenHeight) / 2.0f) };
