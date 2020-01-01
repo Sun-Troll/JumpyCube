@@ -99,7 +99,7 @@ bool JumpyCube::StickPlayform(PlayerPlatform& playform)
 	return false;
 }
 
-int JumpyCube::StickPlats(Platform& plat, float speedUp)
+int JumpyCube::StickPlats(Platform& plat)
 {
 	int returner = 0;
 	const Platform::State platState = plat.GetState();
@@ -117,7 +117,7 @@ int JumpyCube::StickPlats(Platform& plat, float speedUp)
 		}
 		plat.SetState(Platform::State::Touched);
 		stickingToPlat = true;
-		vel = plat.GetVel() * speedUp;
+		vel = plat.GetVel();
 		returner++;
 		return returner;
 	}

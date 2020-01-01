@@ -18,7 +18,7 @@ void Platform::Spawn()
 	posCenter = Vec2(Graphics::ScreenWidth - halfWidth, yPos(rng));
 	vel = Vec2(xVel(rng), yVel(rng));
 	const int stateSet = setState(rng);
-	if (stateSet < 100)
+	if (stateSet < 50)
 	{
 		state = State::Live;
 	}
@@ -32,19 +32,20 @@ void Platform::Spawn()
 	}
 }
 
-void Platform::Activate()
+void Platform::Activate(float speedUp)
 {
 	assert(state != State::Uninitialized);
 	assert(!isActive);
 	assert(posCenter.x > Graphics::ScreenWidth / 2);
 	isActive = true;
+	vel *= speedUp;
 }
 
-void Platform::Update(float speedUp, float ft)
+void Platform::Update(float ft)
 {
 	if (isActive)
 	{
-		posCenter += vel * speedUp * ft;
+		posCenter += vel * ft;
 	}
 }
 

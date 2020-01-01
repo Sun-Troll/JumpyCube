@@ -62,14 +62,14 @@ void Game::UpdateModel(float ft)
 
 		if (timeSinceSpawn > SpawnTime)
 		{
-			plats[currentPlaty].Activate();
+			plats[currentPlaty].Activate(speedUp);
 			currentPlaty++;
 			timeSinceSpawn = 0.0f;
 			speedUp += speedUpPerPlat;
 		}
 		for (int i = std::max(0, currentPlaty - nPlatsBackCheck); i < currentPlaty; i++)
 		{
-			plats[i].Update(speedUp, frameTime);
+			plats[i].Update(frameTime);
 			plats[i].ClampScreen();
 		}
 
@@ -100,7 +100,7 @@ void Game::UpdateModel(float ft)
 		jumpy.Update(gravity, friction, frameTime);
 		for (int i = std::max(0, currentPlaty - nPlatsBackCheck); i < currentPlaty; i++)
 		{
-			const int stickPlatCheck = jumpy.StickPlats(plats[i], speedUp);
+			const int stickPlatCheck = jumpy.StickPlats(plats[i]);
 			if (stickPlatCheck > 0)
 			{
 				playform.SetState(PlayerPlatform::State::Free);
