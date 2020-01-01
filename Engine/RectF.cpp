@@ -44,3 +44,8 @@ RectF::RectF(const Vec2 & leftTop, float width, float height)
 	assert(left <= right);
 	assert(top <= bottom);
 }
+
+bool RectF::IsOverlaping(const RectF rect) const
+{
+	return left < rect.right && right > rect.left && top < rect.bottom && bottom > rect.top;
+}
