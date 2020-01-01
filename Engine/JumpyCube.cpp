@@ -87,14 +87,16 @@ void JumpyCube::Jump(PlayerPlatform& playform, bool charging, const Vec2& mouseV
 	}
 }
 
-void JumpyCube::StickPlayform(PlayerPlatform& playform)
+bool JumpyCube::StickPlayform(PlayerPlatform& playform)
 {
 	if (GetRect().IsOverlaping(playform.GetRect()) && state == State::Jumping
 		&& playform.GetState() == PlayerPlatform::State::Free)
 	{
 		state = State::Sticking;
 		playform.SetState(PlayerPlatform::State::JumpyOn);
+		return true;
 	}
+	return false;
 }
 
 int JumpyCube::StickPlats(Platform& plat)

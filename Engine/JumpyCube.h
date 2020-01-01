@@ -19,7 +19,7 @@ public:
 	void Update(float gravity, float friction, float ft);
 	void ClampScreen();
 	void Jump(PlayerPlatform& playform, bool charging, const Vec2& mouseVec, float ft);
-	void StickPlayform(PlayerPlatform& playform);
+	bool StickPlayform(PlayerPlatform& playform);
 	int StickPlats(Platform& plat);
 	bool OutsideBorders();
 	bool ColRedPlat(const Platform& plat);

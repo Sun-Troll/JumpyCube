@@ -28,6 +28,8 @@ Game::Game(MainWindow& wnd)
 	soundDead(L"Sounds\\Fart.wav"),
 	soundLost(L"Sounds\\spayed.wav"),
 	soundGainLive(L"Sounds\\Eat.wav"),
+	soundStickPlat(L"Sounds\\arkbrick.wav"),
+	soundStickPlayform(L"Sounds\\arkpad.wav"),
 	jumpy(Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f), 10),
 	playform(Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f))
 {
@@ -95,11 +97,15 @@ void Game::UpdateModel()
 		jumpy.Update(gravity, friction, frameTime);
 		for (int i = std::max(0, currentPlaty - nPlatsBackCheck); i < currentPlaty; i++)
 		{
-			int stickPlatCheck = jumpy.StickPlats(plats[i]);
+			const int stickPlatCheck = jumpy.StickPlats(plats[i]);
 			if (stickPlatCheck > 0)
 			{
 				playform.SetState(PlayerPlatform::State::Free);
-				if (stickPlatCheck == 2)
+				if (stickPlatCheck == 1)
+				{
+					soundStickPlat.Play();
+				}
+				else if (stickPlatCheck == 2)
 				{
 					soundGainLive.Play();
 				}
@@ -110,7 +116,10 @@ void Game::UpdateModel()
 				soundDead.Play();
 			}
 		}
-		jumpy.StickPlayform(playform);
+		if (jumpy.StickPlayform(playform))
+		{
+			soundStickPlayform.Play();
+		}
 		if (jumpy.OutsideBorders())
 		{
 			playform.SetState(PlayerPlatform::State::JumpyDead);
@@ -127,10 +136,10 @@ void Game::UpdateModel()
 			soundLost.Play();
 		}
 
-		if (wnd.kbd.KeyIsPressed(VK_SPACE))
+		/*if (wnd.kbd.KeyIsPressed(VK_SPACE))
 		{
 			playform.Cheat();
-		}
+		}*/
 	}
 }
 

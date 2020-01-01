@@ -21,10 +21,10 @@ public:
 	State GetState() const;
 	void SetState(State stateSet);
 	Vec2 GetPos() const;
-	void Cheat()
+	/*void Cheat()
 	{
 		state = State::Free;
-	}
+	}*/
 private:
 	Vec2 posCenter;
 	static constexpr float movementSpeed = 200.0f;

@@ -53,6 +53,8 @@ private:
 	Sound soundDead;
 	Sound soundLost;
 	Sound soundGainLive;
+	Sound soundStickPlat;
+	Sound soundStickPlayform;
 	JumpyCube jumpy;
 	PlayerPlatform playform;
 	static constexpr int platformMax = 300;
