@@ -38,7 +38,7 @@ public:
 	void Go();
 private:
 	void ComposeFrame();
-	void UpdateModel();
+	void UpdateModel(float ft);
 	/********************************/
 	/*  User Functions              */
 	/********************************/
@@ -47,6 +47,7 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	static constexpr int nSubframes = 10;
 	static constexpr float gravity = 300.0f;
 	static constexpr float friction = 4.0f;
 	FrameTimer ft;

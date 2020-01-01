@@ -43,15 +43,19 @@ Game::Game(MainWindow& wnd)
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
-	UpdateModel();
+	gfx.BeginFrame();
+	const float frameT = ft.FrameTime() / float(nSubframes);
+	for (int f = 0; f < nSubframes; f++)
+	{
+		UpdateModel(frameT);
+	}
 	ComposeFrame();
 	gfx.EndFrame();
 }
 
-void Game::UpdateModel()
+void Game::UpdateModel(float ft)
 {
-	const float frameTime = ft.FrameTime();
+	const float frameTime = ft;
 	if (!won && !lost && start)
 	{
 		timeSinceSpawn += frameTime;
