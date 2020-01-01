@@ -60,7 +60,7 @@ void Game::UpdateModel()
 			}
 			timeSinceSpawn = 0.0f;
 		}
-		for (int i = std::max(0, currentPlaty - 20); i < currentPlaty; i++)
+		for (int i = std::max(0, currentPlaty - nPlatsBackCheck); i < currentPlaty; i++)
 		{
 			plats[i].Update(frameTime);
 			plats[i].ClampScreen();
@@ -91,7 +91,7 @@ void Game::UpdateModel()
 		jumpy.Jump(playform, wnd.mouse.LeftIsPressed(), Vec2(float(wnd.mouse.GetPosX()), float(wnd.mouse.GetPosY())), frameTime);
 
 		jumpy.Update(gravity, friction, frameTime);
-		for (int i = std::max(0, currentPlaty - 20); i < currentPlaty; i++)
+		for (int i = std::max(0, currentPlaty - nPlatsBackCheck); i < currentPlaty; i++)
 		{
 			if (jumpy.StickPlats(plats[i]))
 			{
@@ -117,7 +117,7 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	for (int i = std::max(0, currentPlaty - 20); i < currentPlaty; i++)
+	for (int i = std::max(0, currentPlaty - nPlatsBackCheck); i < currentPlaty; i++)
 	{
 		plats[i].Draw(gfx);
 	}

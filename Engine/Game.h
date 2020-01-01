@@ -53,8 +53,9 @@ private:
 	Sound SoundBorderTouch;
 	JumpyCube jumpy;
 	PlayerPlatform playform;
-	static constexpr int platformMax = 60;
+	static constexpr int platformMax = 120;
 	int currentPlaty = 0;
+	int nPlatsBackCheck = 60;
 	static constexpr float SpawnTime = 1.0f;
 	float timeSinceSpawn = 0.0f;
 	Platform plats[platformMax];

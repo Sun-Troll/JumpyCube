@@ -18,11 +18,11 @@ void Platform::Spawn()
 	posCenter = Vec2(Graphics::ScreenWidth - halfWidth, yPos(rng));
 	vel = Vec2(xVel(rng), yVel(rng));
 	const int stateSet = setState(rng);
-	if (stateSet < 20)
+	if (stateSet < 100)
 	{
 		state = State::Live;
 	}
-	else if (stateSet < 270)
+	else if (stateSet < 400)
 	{
 		state = State::Free;
 	}
