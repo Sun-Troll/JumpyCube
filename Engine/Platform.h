@@ -18,6 +18,9 @@ public:
 	void Update(float ft);
 	void ClampScreen();
 	RectF GetRect() const;
+	Vec2 GetVel() const;
+	State GetState() const;
+	void SetState(State stateSet);
 	void Draw(Graphics& gfx) const;
 private:
 	Vec2 posCenter{ 0.0f, 0.0f };

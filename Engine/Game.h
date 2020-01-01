@@ -47,13 +47,13 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	static constexpr float gravity = 5.0f;
+	static constexpr float gravity = 300.0f;
 	static constexpr float friction = 4.0f;
 	FrameTimer ft;
 	Sound SoundBorderTouch;
 	JumpyCube jumpy;
 	PlayerPlatform playform;
-	static constexpr int platformMax = 10;
+	static constexpr int platformMax = 60;
 	int currentPlaty = 0;
 	static constexpr float SpawnTime = 1.0f;
 	float timeSinceSpawn = 0.0f;

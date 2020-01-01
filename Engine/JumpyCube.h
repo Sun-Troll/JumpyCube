@@ -1,6 +1,7 @@
 #pragma once
 #include "Graphics.h"
 #include "PlayerPlatform.h"
+#include "Platform.h"
 
 class JumpyCube
 {
@@ -18,7 +19,8 @@ public:
 	void Update(float gravity, float friction, float ft);
 	void ClampScreen();
 	void Jump(PlayerPlatform& playform, bool charging, const Vec2& mouseVec, float ft);
-	void Stick(PlayerPlatform& playform);
+	void StickPlayform(PlayerPlatform& playform);
+	bool StickPlats(Platform& plat);
 	bool OutsideBorders(PlayerPlatform& playform);
 	bool Respawn(PlayerPlatform& playform, float ft);
 	//drawing
@@ -27,6 +29,7 @@ public:
 	void DrawJumpIn(Graphics& gfx) const;
 	void DrawLives(Graphics& gfx) const;
 private:
+	bool stickingToPlat = false;
 	Vec2 posCenter;
 	Vec2 vel{ 0.0f, 0.0f };
 	static constexpr float halfDim = 10.0f;
@@ -48,11 +51,11 @@ private:
 	static constexpr Color LivesBaseC{ 50, 125, 125 };
 	static constexpr Color LiveCurC{ 100, 250, 250 };
 	//jump
-	static constexpr float jumpVelMin = 3.0f;
-	static constexpr float jumpVelMax = 15.0f;
+	static constexpr float jumpVelMin = 180.0f;
+	static constexpr float jumpVelMax = 900.0f;
 	float jumpVel = jumpVelMin;
 	bool jumpCharging = false;
-	static constexpr float jumpChargeSpeed = 6.0f;
+	static constexpr float jumpChargeSpeed = 360.0f;
 	const Vec2 jumpInTopLeft{ 50.0f, 80.0f }; //Why can't do static constexpr?
 	static constexpr float jumpInWidth = 200.0f;
 	static constexpr float jumpInHeight = 20.0f;
@@ -60,7 +63,7 @@ private:
 	static constexpr Color jInColBase{ 125, 75, 25 };
 	static constexpr Color jInColCharge{ 250, 150, 50 };
 	//borders
-	const RectF borders{ 200.0f, float(Graphics::ScreenWidth) - 200.0f, 150.0f, float(Graphics::ScreenHeight) - 50.0f };
+	const RectF borders{ 200.0f, float(Graphics::ScreenWidth) - 200.0f, 150.0f, float(Graphics::ScreenHeight) - 50.0f };//Constexpr?
 	static constexpr float borderDrawThick = 5.0f;
 	static constexpr Color borderC{ 250, 10, 10 };
 	const RectF borderRectLeft{ borders.left - borderDrawThick, borders.left,

@@ -91,7 +91,14 @@ void Game::UpdateModel()
 		jumpy.Jump(playform, wnd.mouse.LeftIsPressed(), Vec2(float(wnd.mouse.GetPosX()), float(wnd.mouse.GetPosY())), frameTime);
 
 		jumpy.Update(gravity, friction, frameTime);
-		jumpy.Stick(playform);
+		for (int i = std::max(0, currentPlaty - 20); i < currentPlaty; i++)
+		{
+			if (jumpy.StickPlats(plats[i]))
+			{
+				playform.SetState(PlayerPlatform::State::Free);
+			}
+		}
+		jumpy.StickPlayform(playform);
 		if (jumpy.OutsideBorders(playform))
 		{
 			SoundBorderTouch.Play();

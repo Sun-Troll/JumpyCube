@@ -77,6 +77,21 @@ RectF Platform::GetRect() const
 	return RectF(halfWidth, halfHeight, posCenter);
 }
 
+Vec2 Platform::GetVel() const
+{
+	return vel;
+}
+
+Platform::State Platform::GetState() const
+{
+	return state;
+}
+
+void Platform::SetState(State stateSet)
+{
+	state = stateSet;
+}
+
 void Platform::Draw(Graphics& gfx) const
 {
 	if (isActive)
