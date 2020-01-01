@@ -25,7 +25,8 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	SoundDead(L"Sounds\\spayed.wav"),
+	soundDead(L"Sounds\\Fart.wav"),
+	soundLost(L"Sounds\\spayed.wav"),
 	jumpy(Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f), 10),
 	playform(Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f))
 {
@@ -100,13 +101,13 @@ void Game::UpdateModel()
 			if (jumpy.ColRedPlat(plats[i]))
 			{
 				playform.SetState(PlayerPlatform::State::JumpyDead);
-				SoundDead.Play();
+				soundDead.Play();
 			}
 		}
 		jumpy.StickPlayform(playform);
 		if (jumpy.OutsideBorders(playform))
 		{
-			SoundDead.Play();
+			soundDead.Play();
 		}
 		jumpy.Respawn(playform, frameTime);
 
@@ -116,6 +117,7 @@ void Game::UpdateModel()
 		if (jumpy.NoLives())
 		{
 			lost = true;
+			soundLost.Play();
 		}
 
 		if (wnd.kbd.KeyIsPressed(VK_SPACE))

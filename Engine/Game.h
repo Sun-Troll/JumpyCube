@@ -50,7 +50,8 @@ private:
 	static constexpr float gravity = 300.0f;
 	static constexpr float friction = 4.0f;
 	FrameTimer ft;
-	Sound SoundDead;
+	Sound soundDead;
+	Sound soundLost;
 	JumpyCube jumpy;
 	PlayerPlatform playform;
 	static constexpr int platformMax = 120;
