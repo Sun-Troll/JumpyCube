@@ -29,6 +29,10 @@ Game::Game(MainWindow& wnd)
 	jumpy(Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f), 10),
 	playform(Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f))
 {
+	for (Platform& p : plats)
+	{
+		p.Spawn();
+	}
 }
 
 void Game::Go()
@@ -42,50 +46,74 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float frameTime = ft.FrameTime();
-	
-	bool left = false;
-	bool right = false;
-	bool top = false;
-	bool bottom = false;
-	if (wnd.kbd.KeyIsPressed('A'))
+	if (!won)
 	{
-		left = true;
-	}
-	else if (wnd.kbd.KeyIsPressed('D'))
-	{
-		right = true;
-	}
-	if (wnd.kbd.KeyIsPressed('W'))
-	{
-		top = true;
-	}
-	else if (wnd.kbd.KeyIsPressed('S'))
-	{
-		bottom = true;
-	}
-	playform.Update(left, right, top, bottom, frameTime);
+		timeSinceSpawn += frameTime;
 
-	jumpy.Jump(playform, wnd.mouse.LeftIsPressed(), Vec2(float(wnd.mouse.GetPosX()), float(wnd.mouse.GetPosY())), frameTime);
+		if (timeSinceSpawn > SpawnTime)
+		{
+			plats[currentPlaty].Activate();
+			currentPlaty++;
+			if (currentPlaty >= platformMax)
+			{
+				won = true;
+			}
+			timeSinceSpawn = 0.0f;
+		}
+		for (int i = std::max(0, currentPlaty - 20); i < currentPlaty; i++)
+		{
+			plats[i].Update(frameTime);
+			plats[i].ClampScreen();
+		}
 
-	jumpy.Update(gravity, friction, frameTime);
-	jumpy.Stick(playform);
-	if (jumpy.OutsideBorders(playform))
-	{
-		SoundBorderTouch.Play();
-	}
-	jumpy.Respawn(playform, frameTime);
+		bool left = false;
+		bool right = false;
+		bool top = false;
+		bool bottom = false;
+		if (wnd.kbd.KeyIsPressed('A'))
+		{
+			left = true;
+		}
+		else if (wnd.kbd.KeyIsPressed('D'))
+		{
+			right = true;
+		}
+		if (wnd.kbd.KeyIsPressed('W'))
+		{
+			top = true;
+		}
+		else if (wnd.kbd.KeyIsPressed('S'))
+		{
+			bottom = true;
+		}
+		playform.Update(left, right, top, bottom, frameTime);
 
-	playform.ClampScreen();
-	jumpy.ClampScreen();
+		jumpy.Jump(playform, wnd.mouse.LeftIsPressed(), Vec2(float(wnd.mouse.GetPosX()), float(wnd.mouse.GetPosY())), frameTime);
 
-	if (wnd.kbd.KeyIsPressed(VK_SPACE))
-	{
-		playform.Cheat();
+		jumpy.Update(gravity, friction, frameTime);
+		jumpy.Stick(playform);
+		if (jumpy.OutsideBorders(playform))
+		{
+			SoundBorderTouch.Play();
+		}
+		jumpy.Respawn(playform, frameTime);
+
+		playform.ClampScreen();
+		jumpy.ClampScreen();
+
+		if (wnd.kbd.KeyIsPressed(VK_SPACE))
+		{
+			playform.Cheat();
+		}
 	}
 }
 
 void Game::ComposeFrame()
 {
+	for (int i = std::max(0, currentPlaty - 20); i < currentPlaty; i++)
+	{
+		plats[i].Draw(gfx);
+	}
 	playform.Draw(gfx);
 	jumpy.DrawLives(gfx);
 	jumpy.DrawJumpIn(gfx);

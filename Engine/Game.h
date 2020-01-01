@@ -26,6 +26,7 @@
 #include "FrameTimer.h"
 #include "JumpyCube.h"
 #include "PlayerPlatform.h"
+#include "Platform.h"
 #include "Sound.h"
 
 class Game
@@ -52,5 +53,11 @@ private:
 	Sound SoundBorderTouch;
 	JumpyCube jumpy;
 	PlayerPlatform playform;
+	static constexpr int platformMax = 10;
+	int currentPlaty = 0;
+	static constexpr float SpawnTime = 1.0f;
+	float timeSinceSpawn = 0.0f;
+	Platform plats[platformMax];
+	bool won = false;
 	/********************************/
 };
