@@ -100,7 +100,7 @@ void Game::UpdateModel(float ft)
 		jumpy.Update(gravity, friction, frameTime);
 		for (int i = std::max(0, currentPlaty - nPlatsBackCheck); i < currentPlaty; i++)
 		{
-			const int stickPlatCheck = jumpy.StickPlats(plats[i]);
+			const int stickPlatCheck = jumpy.StickPlats(plats[i], speedUp);
 			if (stickPlatCheck > 0)
 			{
 				playform.SetState(PlayerPlatform::State::Free);

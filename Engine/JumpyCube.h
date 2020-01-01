@@ -20,7 +20,7 @@ public:
 	void ClampScreen();
 	void Jump(PlayerPlatform& playform, bool charging, const Vec2& mouseVec, float ft);
 	bool StickPlayform(PlayerPlatform& playform);
-	int StickPlats(Platform& plat);
+	int StickPlats(Platform& plat, float speedUp);
 	bool OutsideBorders();
 	bool ColRedPlat(const Platform& plat);
 	bool Respawn(PlayerPlatform& playform, float ft);
