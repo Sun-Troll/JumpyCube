@@ -27,7 +27,7 @@ public:
 	}*/
 private:
 	Vec2 posCenter;
-	static constexpr float movementSpeed = 200.0f;
+	static constexpr float movementSpeed = 300.0f;
 	static constexpr float halfWidth = 50.0f;
 	static constexpr float halfHeight = 10.0f;
 	State state = State::jumpyResp;

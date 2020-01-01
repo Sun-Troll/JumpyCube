@@ -109,7 +109,10 @@ int JumpyCube::StickPlats(Platform& plat)
 		state = State::Sticking;
 		if (platState == Platform::State::Live)
 		{
-			nLives++;
+			if (nLives < nLivesMax)
+			{
+				nLives++;
+			}
 			returner++;
 		}
 		plat.SetState(Platform::State::Touched);

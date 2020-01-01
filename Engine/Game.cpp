@@ -61,10 +61,11 @@ void Game::UpdateModel()
 			plats[currentPlaty].Activate();
 			currentPlaty++;
 			timeSinceSpawn = 0.0f;
+			speedUp += speedUpPerPlat;
 		}
 		for (int i = std::max(0, currentPlaty - nPlatsBackCheck); i < currentPlaty; i++)
 		{
-			plats[i].Update(frameTime);
+			plats[i].Update(speedUp, frameTime);
 			plats[i].ClampScreen();
 		}
 

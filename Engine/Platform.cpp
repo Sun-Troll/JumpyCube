@@ -40,11 +40,11 @@ void Platform::Activate()
 	isActive = true;
 }
 
-void Platform::Update(float ft)
+void Platform::Update(float speedUp, float ft)
 {
 	if (isActive)
 	{
-		posCenter += vel * ft;
+		posCenter += vel * speedUp * ft;
 	}
 }
 

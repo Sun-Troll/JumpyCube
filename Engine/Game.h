@@ -65,6 +65,8 @@ private:
 	static constexpr float SpawnTime = 1.0f;
 	float timeSinceSpawn = 0.0f;
 	Platform plats[platformMax];
+	float speedUp = 1.0f;
+	static constexpr float speedUpPerPlat = 1.0f / platformMax;
 	bool start = false;
 	bool won = false;
 	bool lost = false;

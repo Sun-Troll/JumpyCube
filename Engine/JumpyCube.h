@@ -65,7 +65,7 @@ private:
 	static constexpr float jumpVelMax = 900.0f;
 	float jumpVel = jumpVelMin;
 	bool jumpCharging = false;
-	static constexpr float jumpChargeSpeed = 360.0f;
+	static constexpr float jumpChargeSpeed = 720.0f;
 	const Vec2 jumpInTopLeft{ 50.0f, 80.0f }; //Why can't do static constexpr?
 	static constexpr float jumpInWidth = 200.0f;
 	static constexpr float jumpInHeight = 20.0f;

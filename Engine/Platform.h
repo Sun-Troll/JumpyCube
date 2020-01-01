@@ -15,7 +15,7 @@ public:
 public:
 	void Spawn();
 	void Activate();
-	void Update(float ft);
+	void Update(float speedUp, float ft);
 	void ClampScreen();
 	RectF GetRect() const;
 	Vec2 GetVel() const;
