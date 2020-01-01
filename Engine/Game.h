@@ -54,7 +54,7 @@ private:
 	Sound soundLost;
 	JumpyCube jumpy;
 	PlayerPlatform playform;
-	static constexpr int platformMax = 120;
+	static constexpr int platformMax = 300;
 	int currentPlaty = 0;
 	int nPlatsBackCheck = 60;
 	static constexpr float SpawnTime = 1.0f;
@@ -65,5 +65,12 @@ private:
 	const RectF wonLoseRect{ 150.0f, 100.0f, Vec2(float(Graphics::ScreenWidth) / 2.0f, float(Graphics::ScreenHeight) / 2.0f) };
 	static constexpr Color colWon = Colors::Yellow;
 	static constexpr Color colLost{ 100, 10, 10 };
+	//draw win
+	const Vec2 winInTopLeft{ 650.0f, 80.0f };
+	static constexpr float winInWidth = 1000.0f;
+	static constexpr float winInHeight = 20.0f;
+	static constexpr float winInDrawChargeRatio = winInWidth / float(platformMax);
+	static constexpr Color winInColBase{ 125, 125, 25 };
+	static constexpr Color winInColCharge{ 250, 250, 50 };
 	/********************************/
 };

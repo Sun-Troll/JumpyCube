@@ -138,14 +138,18 @@ void Game::ComposeFrame()
 	{
 		gfx.DrawRect(wonLoseRect, colWon);
 	}
+	jumpy.DrawLives(gfx);
+	jumpy.DrawJumpIn(gfx);
+	jumpy.DrawRespIn(gfx);
+	//draw win indicator
+	gfx.DrawRect(RectF(winInTopLeft, winInWidth, winInHeight), winInColBase);
+	gfx.DrawRect(RectF(winInTopLeft, winInDrawChargeRatio * float(currentPlaty),
+		winInHeight), winInColCharge);
 	for (int i = std::max(0, currentPlaty - nPlatsBackCheck); i < currentPlaty; i++)
 	{
 		plats[i].Draw(gfx);
 	}
 	playform.Draw(gfx);
-	jumpy.DrawLives(gfx);
-	jumpy.DrawJumpIn(gfx);
-	jumpy.DrawRespIn(gfx);
 	jumpy.DrawBorders(gfx);
 	jumpy.Draw(gfx);
 }
