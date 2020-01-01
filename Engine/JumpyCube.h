@@ -18,6 +18,7 @@ public:
 	void Update(float gravity, float friction, float ft);
 	void ClampScreen();
 	void Jump(PlayerPlatform& playform, bool charging, const Vec2& mouseVec, float ft);
+	void Stick(PlayerPlatform& playform);
 	bool OutsideBorders(PlayerPlatform& playform);
 	bool Respawn(PlayerPlatform& playform, float ft);
 	//drawing

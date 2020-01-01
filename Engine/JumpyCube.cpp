@@ -22,6 +22,10 @@ void JumpyCube::Update(float gravity, float friction, float ft)
 		vel /= pow(friction, ft);
 		posCenter += vel;
 	}
+	else if (state == State::Sticking)
+	{
+		vel = Vec2(0.0f, 0.0f);
+	}
 }
 
 void JumpyCube::ClampScreen()
@@ -58,14 +62,24 @@ void JumpyCube::Jump(PlayerPlatform& playform, bool charging, const Vec2& mouseV
 		{
 			if (state == State::Respawning)
 			{
-				state = State::Jumping;
-				playform.SetState(PlayerPlatform::State::Touched);
 				mustJumpRespawnCounter = 0.0f;
 			}
 			jumpCharging = false;
 			vel += Vec2(mouseVec - posCenter).Normalize() * jumpVel;
+			state = State::Jumping;
+			playform.SetState(PlayerPlatform::State::Touched);
 			jumpVel = jumpVelMin;
 		}
+	}
+}
+
+void JumpyCube::Stick(PlayerPlatform& playform)
+{
+	if (GetRect().IsOverlaping(playform.GetRect()) && state == State::Jumping
+		&& playform.GetState() == PlayerPlatform::State::Free)
+	{
+		state = State::Sticking;
+		playform.SetState(PlayerPlatform::State::JumpyOn);
 	}
 }
 
@@ -136,7 +150,7 @@ void JumpyCube::Draw(Graphics& gfx) const
 	}
 }
 
-void JumpyCube::DrawBorders(Graphics & gfx) const
+void JumpyCube::DrawBorders(Graphics& gfx) const
 {
 	gfx.DrawRect(borderRectLeft, borderC);
 	gfx.DrawRect(borderRectRight, borderC);

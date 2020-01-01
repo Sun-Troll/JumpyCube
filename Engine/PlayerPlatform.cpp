@@ -13,25 +13,28 @@ RectF PlayerPlatform::GetRect() const
 
 void PlayerPlatform::Update(bool left, bool right, bool top, bool bottom, float ft)
 {
-	Vec2 moveDirection{ 0.0f, 0.0f };
-	if (left)
+	if (state != State::JumpyOn)
 	{
-		moveDirection.x = -1.0f;
+		Vec2 moveDirection{ 0.0f, 0.0f };
+		if (left)
+		{
+			moveDirection.x = -1.0f;
+		}
+		else if (right)
+		{
+			moveDirection.x = 1.0f;
+		}
+		if (top)
+		{
+			moveDirection.y = -1.0f;
+		}
+		else if (bottom)
+		{
+			moveDirection.y = 1.0f;
+		}
+		moveDirection.Normalize();
+		posCenter += moveDirection * movementSpeed * ft;
 	}
-	else if (right)
-	{
-		moveDirection.x = 1.0f;
-	}
-	if (top)
-	{
-		moveDirection.y = -1.0f;
-	}
-	else if (bottom)
-	{
-		moveDirection.y = 1.0f;
-	}
-	moveDirection.Normalize();
-	posCenter += moveDirection * movementSpeed * ft;
 }
 
 void PlayerPlatform::ClampScreen()

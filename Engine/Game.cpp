@@ -68,6 +68,7 @@ void Game::UpdateModel()
 	jumpy.Jump(playform, wnd.mouse.LeftIsPressed(), Vec2(float(wnd.mouse.GetPosX()), float(wnd.mouse.GetPosY())), frameTime);
 
 	jumpy.Update(gravity, friction, frameTime);
+	jumpy.Stick(playform);
 	if (jumpy.OutsideBorders(playform))
 	{
 		SoundBorderTouch.Play();
