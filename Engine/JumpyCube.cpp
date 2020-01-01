@@ -116,7 +116,7 @@ bool JumpyCube::StickPlats(Platform& plat)
 	return false;
 }
 
-bool JumpyCube::OutsideBorders(PlayerPlatform& playform)
+bool JumpyCube::OutsideBorders()
 {
 	const RectF rect = GetRect();
 	if (state != State::Dead && state != State::Respawning
@@ -124,7 +124,6 @@ bool JumpyCube::OutsideBorders(PlayerPlatform& playform)
 	{
 		nLives--;
 		state = State::Dead;
-		playform.SetState(PlayerPlatform::State::JumpyDead);
 		respawnCounter = 0.0f;
 		return true;
 	}

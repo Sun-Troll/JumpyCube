@@ -21,7 +21,7 @@ public:
 	void Jump(PlayerPlatform& playform, bool charging, const Vec2& mouseVec, float ft);
 	void StickPlayform(PlayerPlatform& playform);
 	bool StickPlats(Platform& plat);
-	bool OutsideBorders(PlayerPlatform& playform);
+	bool OutsideBorders();
 	bool ColRedPlat(Platform& plat);
 	bool Respawn(PlayerPlatform& playform, float ft);
 	bool NoLives() const;
@@ -42,7 +42,7 @@ private:
 	State state = State::Respawning;
 	static constexpr float respawnTime = 3.0f;
 	float respawnCounter = 0.0f;
-	float mustJumpRespawnTime = 5.0f;
+	static constexpr float mustJumpRespawnTime = 5.0f;
 	float mustJumpRespawnCounter = 0.0f;
 	//lives
 	static constexpr int nLivesMax = 34;

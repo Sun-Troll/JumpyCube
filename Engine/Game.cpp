@@ -105,8 +105,9 @@ void Game::UpdateModel()
 			}
 		}
 		jumpy.StickPlayform(playform);
-		if (jumpy.OutsideBorders(playform))
+		if (jumpy.OutsideBorders())
 		{
+			playform.SetState(PlayerPlatform::State::JumpyDead);
 			soundDead.Play();
 		}
 		jumpy.Respawn(playform, frameTime);
