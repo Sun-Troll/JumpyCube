@@ -42,7 +42,7 @@ private:
 	static constexpr Color colRespawning = { 250, 250, 100 };
 	State state = State::Respawning;
 	//respawn
-	static constexpr float respawnTime = 3.0f;
+	static constexpr float respawnTime = 2.0f;
 	float respawnCounter = 0.0f;
 	static constexpr float mustJumpRespawnTime = 5.0f;
 	float mustJumpRespawnCounter = 0.0f;
