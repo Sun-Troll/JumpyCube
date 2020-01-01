@@ -145,6 +145,7 @@ void Game::ComposeFrame()
 	playform.Draw(gfx);
 	jumpy.DrawLives(gfx);
 	jumpy.DrawJumpIn(gfx);
+	jumpy.DrawRespIn(gfx);
 	jumpy.DrawBorders(gfx);
 	jumpy.Draw(gfx);
 }

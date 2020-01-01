@@ -22,13 +22,14 @@ public:
 	void StickPlayform(PlayerPlatform& playform);
 	bool StickPlats(Platform& plat);
 	bool OutsideBorders();
-	bool ColRedPlat(Platform& plat);
+	bool ColRedPlat(const Platform& plat);
 	bool Respawn(PlayerPlatform& playform, float ft);
 	bool NoLives() const;
 	//drawing
 	void Draw(Graphics& gfx) const;
 	void DrawBorders(Graphics& gfx) const;
 	void DrawJumpIn(Graphics& gfx) const;
+	void DrawRespIn(Graphics& gfx) const;
 	void DrawLives(Graphics& gfx) const;
 private:
 	bool stickingToPlat = false;
@@ -40,10 +41,17 @@ private:
 	static constexpr Color colDead{ 250, 100, 100 };
 	static constexpr Color colRespawning = { 250, 250, 100 };
 	State state = State::Respawning;
+	//respawn
 	static constexpr float respawnTime = 3.0f;
 	float respawnCounter = 0.0f;
 	static constexpr float mustJumpRespawnTime = 5.0f;
 	float mustJumpRespawnCounter = 0.0f;
+	const Vec2 respInTopLeft{ 350.0f, 80.0f };
+	static constexpr float respInWidth = 200.0f;
+	static constexpr float respInHeight = 20.0f;
+	static constexpr float respInDrawChargeRatio = respInWidth / mustJumpRespawnTime;
+	static constexpr Color resInColBase{ 25, 75, 125 };
+	static constexpr Color resInColCharge{ 50, 150, 250 };
 	//lives
 	static constexpr int nLivesMax = 34;
 	int nLives = 10;

@@ -130,7 +130,7 @@ bool JumpyCube::OutsideBorders()
 	return false;
 }
 
-bool JumpyCube::ColRedPlat(Platform& plat)
+bool JumpyCube::ColRedPlat(const Platform& plat)
 {
 	if (state != State::Dead && state != State::Respawning
 		&& GetRect().IsOverlaping(plat.GetRect()) && plat.GetState() == Platform::State::Deadly)
@@ -212,7 +212,15 @@ void JumpyCube::DrawBorders(Graphics& gfx) const
 void JumpyCube::DrawJumpIn(Graphics& gfx) const
 {
 	gfx.DrawRect(RectF(jumpInTopLeft, jumpInWidth, jumpInHeight), jInColBase);
-	gfx.DrawRect(RectF(jumpInTopLeft, jumpInDrawChargeRatio * (jumpVel - jumpVelMin), jumpInHeight), jInColCharge);
+	gfx.DrawRect(RectF(jumpInTopLeft, jumpInDrawChargeRatio * (jumpVel - jumpVelMin),
+		jumpInHeight), jInColCharge);
+}
+
+void JumpyCube::DrawRespIn(Graphics & gfx) const
+{
+	gfx.DrawRect(RectF(respInTopLeft, respInWidth, respInHeight), resInColBase);
+	gfx.DrawRect(RectF(respInTopLeft, respInDrawChargeRatio * (mustJumpRespawnTime - mustJumpRespawnCounter),
+		respInHeight), resInColCharge);
 }
 
 void JumpyCube::DrawLives(Graphics& gfx) const
