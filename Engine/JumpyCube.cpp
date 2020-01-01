@@ -161,6 +161,12 @@ bool JumpyCube::Respawn(PlayerPlatform& playform, float ft)
 	return false;
 }
 
+bool JumpyCube::NoLives() const
+{
+	assert(nLives >= 0);
+	return nLives == 0;
+}
+
 void JumpyCube::Draw(Graphics& gfx) const
 {
 	switch (state)

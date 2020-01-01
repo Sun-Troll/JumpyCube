@@ -60,5 +60,9 @@ private:
 	float timeSinceSpawn = 0.0f;
 	Platform plats[platformMax];
 	bool won = false;
+	bool lost = false;
+	const RectF wonLoseRect{ 150.0f, 100.0f, Vec2(float(Graphics::ScreenWidth) / 2.0f, float(Graphics::ScreenHeight) / 2.0f) };
+	static constexpr Color colWon = Colors::Yellow;
+	static constexpr Color colLost{ 100, 10, 10 };
 	/********************************/
 };

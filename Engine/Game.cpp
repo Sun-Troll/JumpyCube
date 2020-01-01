@@ -46,7 +46,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float frameTime = ft.FrameTime();
-	if (!won)
+	if (!won && !lost)
 	{
 		timeSinceSpawn += frameTime;
 
@@ -108,6 +108,11 @@ void Game::UpdateModel()
 		playform.ClampScreen();
 		jumpy.ClampScreen();
 
+		if (jumpy.NoLives())
+		{
+			lost = true;
+		}
+
 		if (wnd.kbd.KeyIsPressed(VK_SPACE))
 		{
 			playform.Cheat();
@@ -117,6 +122,14 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	if (lost)
+	{
+		gfx.DrawRect(wonLoseRect, colLost);
+	}
+	else if (won)
+	{
+		gfx.DrawRect(wonLoseRect, colWon);
+	}
 	for (int i = std::max(0, currentPlaty - nPlatsBackCheck); i < currentPlaty; i++)
 	{
 		plats[i].Draw(gfx);

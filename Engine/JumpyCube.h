@@ -23,6 +23,7 @@ public:
 	bool StickPlats(Platform& plat);
 	bool OutsideBorders(PlayerPlatform& playform);
 	bool Respawn(PlayerPlatform& playform, float ft);
+	bool NoLives() const;
 	//drawing
 	void Draw(Graphics& gfx) const;
 	void DrawBorders(Graphics& gfx) const;
