@@ -52,6 +52,7 @@ private:
 	FrameTimer ft;
 	Sound soundDead;
 	Sound soundLost;
+	Sound soundGainLive;
 	JumpyCube jumpy;
 	PlayerPlatform playform;
 	static constexpr int platformMax = 300;

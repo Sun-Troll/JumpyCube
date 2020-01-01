@@ -27,6 +27,7 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	soundDead(L"Sounds\\Fart.wav"),
 	soundLost(L"Sounds\\spayed.wav"),
+	soundGainLive(L"Sounds\\Eat.wav"),
 	jumpy(Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f), 10),
 	playform(Vec2(Graphics::ScreenWidth / 2.0f, Graphics::ScreenHeight / 2.0f))
 {
@@ -94,9 +95,14 @@ void Game::UpdateModel()
 		jumpy.Update(gravity, friction, frameTime);
 		for (int i = std::max(0, currentPlaty - nPlatsBackCheck); i < currentPlaty; i++)
 		{
-			if (jumpy.StickPlats(plats[i]))
+			int stickPlatCheck = jumpy.StickPlats(plats[i]);
+			if (stickPlatCheck > 0)
 			{
 				playform.SetState(PlayerPlatform::State::Free);
+				if (stickPlatCheck == 2)
+				{
+					soundGainLive.Play();
+				}
 			}
 			if (jumpy.ColRedPlat(plats[i]))
 			{

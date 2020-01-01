@@ -97,8 +97,9 @@ void JumpyCube::StickPlayform(PlayerPlatform& playform)
 	}
 }
 
-bool JumpyCube::StickPlats(Platform& plat)
+int JumpyCube::StickPlats(Platform& plat)
 {
+	int returner = 0;
 	const Platform::State platState = plat.GetState();
 	if (GetRect().IsOverlaping(plat.GetRect()) && state == State::Jumping
 		&& (platState == Platform::State::Free || platState == Platform::State::Live))
@@ -107,13 +108,15 @@ bool JumpyCube::StickPlats(Platform& plat)
 		if (platState == Platform::State::Live)
 		{
 			nLives++;
+			returner++;
 		}
 		plat.SetState(Platform::State::Touched);
 		stickingToPlat = true;
 		vel = plat.GetVel();
-		return true;
+		returner++;
+		return returner;
 	}
-	return false;
+	return returner;
 }
 
 bool JumpyCube::OutsideBorders()
